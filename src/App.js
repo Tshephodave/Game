@@ -147,7 +147,7 @@ const App = () => {
           setCurrentPlayer(goalkeeper);
           playSound('pass.mp3');
           generateMathQuestion();
-          showAlert('Goalkeeper for Team B has to make a save!', 'green-600', 'white', 'top-0');
+          showAlert('Goalkeeper for Team B has to make a save!', 'bg-red-600', 'text-white', 'top-0');
   
         }
       } else if (currentPlayer.id === 6) {
@@ -160,7 +160,7 @@ const App = () => {
           setCurrentPlayer(goalkeeper);
           playSound('pass.mp3');
           generateMathQuestion();
-          showAlert('Goalkeeper for Team A has to make a save!', 'green-600', 'white', 'top-0');
+          showAlert('Goalkeeper for Team A has to make a save!', 'bg-green-600', 'text-white','top-0' );
   
         }
       } else if (currentPlayer.id === 0) {
@@ -175,11 +175,12 @@ const App = () => {
   };
   const showAlert = (message, bgColor, textColor, position = 'top-16') => {
     const alertElement = document.createElement('div');
-    alertElement.className = `fixed ${position} left-1/2 transform -translate-x-1/2 bg-${bgColor} text-${textColor} p-4 text-center font-bold z-50`;
+    alertElement.className = `fixed ${position} left-1/2 transform -translate-x-1/2 ${bgColor} ${textColor} p-4 text-center font-bold z-50`;
     alertElement.textContent = message;
     document.body.appendChild(alertElement);
     setTimeout(() => alertElement.remove(), 3000); // Remove after 3 seconds
-  };
+};
+
   
   const handleTimeout = () => {
     if (gameOver || gamePaused) return;  // Prevent action when the game is paused
@@ -190,7 +191,8 @@ const App = () => {
       nextPlayerId = 3; // Team A loses the ball
       playSound('goal.mp3');
       setScore(prevScore => ({ ...prevScore, B: prevScore.B + 1 }));
-      showAlert('Team B has a goal!', 'green-600', 'white', 'top-16');
+      showAlert('Team B has a goal!', 'bg-red-600', 'text-white');  // It should now show red
+
   
       setTimerRunning(false); // Stop the timer
       setShowResumePopup(true); // Show resume button after goal
@@ -200,7 +202,7 @@ const App = () => {
       nextPlayerId = 9; // Team B loses the ball
       playSound('goal.mp3');
       setScore(prevScore => ({ ...prevScore, A: prevScore.A + 1 }));
-      showAlert('Team A has a goal!', 'green-600', 'white', 'top-16');
+      showAlert('Team A has a goal!', 'bg-green-600', 'text-white');
       setTimerRunning(false); // Stop the timer
       setShowResumePopup(true); // Show resume button after goal
       setGamePaused(true);      // Pause the game

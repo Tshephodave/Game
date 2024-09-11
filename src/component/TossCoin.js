@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Typical from 'react-typical';
+import {ReactTyped }from 'react-typed';
 import logo from './4572174117896192.png';
-import { playSound } from '../soundUtils'; 
+import { playSound } from '../soundUtils';
 
 const CoinToss = ({ onTossResult, onStartGame }) => {
   const [tossing, setTossing] = useState(false);
@@ -9,7 +9,7 @@ const CoinToss = ({ onTossResult, onStartGame }) => {
   const [showStartButton, setShowStartButton] = useState(false);
 
   useEffect(() => {
-    playSound('Stadium Crowd Sound Effect.mp3'); 
+    playSound('Stadium Crowd Sound Effect.mp3');
   }, []);
 
   const handleToss = () => {
@@ -47,10 +47,13 @@ const CoinToss = ({ onTossResult, onStartGame }) => {
         </button>
         {result && !tossing && (
           <div className="mt-6 text-2xl font-semibold text-white">
-            <Typical
-              steps={[`Team ${result} won the toss!`, 1500]}
-              loop={1}
-              wrapper="p"
+            <ReactTyped
+              strings={[`Team ${result} won the toss!`]}
+              typeSpeed={50}
+              backSpeed={25}
+              backDelay={1000}
+              startDelay={500}
+              showCursor={true}
             />
           </div>
         )}
@@ -68,6 +71,3 @@ const CoinToss = ({ onTossResult, onStartGame }) => {
 };
 
 export default CoinToss;
-
-
-

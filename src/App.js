@@ -147,7 +147,7 @@ const App = () => {
           setCurrentPlayer(goalkeeper);
           playSound('pass.mp3');
           generateMathQuestion();
-          showAlert('Goalkeeper for Team B has to make a save! or Team B will have a Goal!!!!!', 'bg-red-600', 'text-white', 'top-0');
+          showAlert('Goalkeeper for Team B has to make a save!', 'bg-red-600', 'text-white', 'top-0');
   
         }
       } else if (currentPlayer.id === 6) {
@@ -160,7 +160,7 @@ const App = () => {
           setCurrentPlayer(goalkeeper);
           playSound('pass.mp3');
           generateMathQuestion();
-          showAlert('Goalkeeper for Team A has to make a save! or Team B will have a Goal!!!!!', 'bg-green-600', 'text-white','top-0' );
+          showAlert('Goalkeeper for Team A has to make a save!', 'bg-green-600', 'text-white','top-0' );
   
         }
       } else if (currentPlayer.id === 0) {

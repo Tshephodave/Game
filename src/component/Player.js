@@ -51,7 +51,7 @@ const Player = ({ player, onClick, isSelectable }) => {
 
        {/* Player Label with conditional positioning */}
 <div
-  className={`absolute text-base ${player.id === 6 ? 'left-[-50px]' : 'right-[-50px]'} top-1/2 transform -translate-y-1/2 bg-white px-1 rounded-md shadow-md`}
+  className={`absolute text-base font-bold ${player.id === 6 ? 'left-[-50px]' : 'right-[-50px]'} top-1/2 transform -translate-y-1/2 bg-white px-1 rounded-md shadow-md`}
 >
   {player.team} {player.id % 11 + 1}
 </div>

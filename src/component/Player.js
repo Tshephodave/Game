@@ -1,23 +1,22 @@
 import React from 'react';
 
 const baseSpriteStyles = {
-  width: '64px',  
-  height: '96px', 
-  backgroundSize: '64px 96px', 
+  width: '64px',
+  height: '96px',
+  backgroundSize: '64px 96px',
   backgroundRepeat: 'no-repeat',
 };
 
 const Player = ({ player, onClick, isSelectable }) => {
-
   const isGoalkeeper = (player.team === 'A' && player.id === 0) || (player.team === 'B' && player.id === 6);
 
   const spriteImage = isGoalkeeper
-    ? player.team === 'A' 
-      ? 'url(/sprite/keeper.png)' 
-      : 'url(/sprite/real.jpg)' 
+    ? player.team === 'A'
+      ? 'url(/sprite/keeper.png)'
+      : 'url(/sprite/real.jpg)'
     : player.team === 'A'
-      ? 'url(/sprite/TeamGree.jpg)' 
-      : 'url(/sprite/teamred.jpg)'; 
+      ? 'url(/sprite/TeamGree.jpg)'
+      : 'url(/sprite/teamred.jpg)';
 
   const spriteStyles = {
     ...baseSpriteStyles,
@@ -35,7 +34,11 @@ const Player = ({ player, onClick, isSelectable }) => {
 
   return (
     <div className={playerClasses} style={positionStyles} onClick={isSelectable ? onClick : undefined}>
-      <div className={`relative flex flex-col items-center ${player.team === 'A' ? 'bg-green-300' : 'bg-red-300'} ${player.hasBall ? 'border-4 border-yellow-600' : 'border-2 border-gray-500'} rounded-md p-1`}>
+      <div
+        className={`relative flex flex-col items-center ${
+          player.team === 'A' ? 'bg-green-300' : 'bg-red-300'
+        } ${player.hasBall ? 'border-4 border-yellow-600 animate-flash' : 'border-2 border-gray-500'} rounded-md p-1`}
+      >
         {/* Sprite for player */}
         <div className="w-16 h-24" style={spriteStyles}></div>
 
@@ -46,15 +49,17 @@ const Player = ({ player, onClick, isSelectable }) => {
           </span>
         )}
 
-        {/* Player Label */}
-        <div className="absolute text-xs bottom-[-10px] left-1/2 transform -translate-x-1/2 translate-y-1/2 bg-white px-1 rounded-md shadow-md">
-          {player.team} {player.id % 11 + 1}
-        </div>
+       {/* Player Label with conditional positioning */}
+<div
+  className={`absolute text-base ${player.id === 6 ? 'left-[-50px]' : 'right-[-50px]'} top-1/2 transform -translate-y-1/2 bg-white px-1 rounded-md shadow-md`}
+>
+  {player.team} {player.id % 11 + 1}
+</div>
+
+
       </div>
     </div>
   );
 };
 
 export default Player;
-
-

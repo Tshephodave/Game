@@ -15,10 +15,15 @@ module.exports = {
           '40%': { transform: 'translateY(-30px)' },
           '60%': { transform: 'translateY(-15px)' },
         },
+        flash: {
+          '0%, 100%': { opacity: 1 },
+          '50%': { opacity: 0.5 },
+        },
       },
       animation: {
         run: 'run 1s steps(10) infinite', // Adjust duration and steps
         bounce: 'bounce 1s infinite', // Added bounce animation
+        flash: 'flash 1s ease-in-out infinite', // Flashing animation for players with the ball
       },
     },
   },

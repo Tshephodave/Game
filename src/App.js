@@ -22,6 +22,51 @@ const initialPlayers = [
   { id: 10, team: 'B', name: 'Player B5', hasBall: false, left: '60%', top: '70%' },
   { id: 11, team: 'B', name: 'Player B6', hasBall: false, left: '30%', top: '50%' },
 ];
+const generateEasyQuestion = () => {
+  const num1 = Math.floor(Math.random() * 10);
+  const num2 = Math.floor(Math.random() * 10);
+  const question = `${num1} + ${num2}`;
+  const answer = num1 + num2;
+  return { question, answer };
+};
+const generateMediumQuestion = () => {
+  const operators = ['+', '-', '*', '/'];
+  const num1 = Math.floor(Math.random() * 10);
+  const num2 = Math.floor(Math.random() * 10);
+  const operator = operators[Math.floor(Math.random() * operators.length)];
+  let question = `${num1} ${operator} ${num2}`;
+  let answer;
+
+   
+  switch (operator) {
+    case '+':
+      answer = num1 + num2;
+      break;
+    case '-':
+      answer = num1 - num2;
+      break;
+    case '*':
+      answer = num1 * num2;
+      break;
+    case '/':
+      answer = num2 !== 0 ? num1 / num2 : 0;
+      break;
+    default:
+      answer = 0;
+  }
+
+  return { question, answer };
+};
+
+const generateHardQuestion = () => {
+  const num1 = Math.floor(Math.random() * 20);
+  const num2 = Math.floor(Math.random() * 20);
+  const num3 = Math.floor(Math.random() * 10);
+  const question = `(${num1} + ${num2}) * ${num3}`;
+  const answer = (num1 + num2) * num3;
+  return { question, answer };
+};
+  
 
 const App = () => {
   const [players, setPlayers] = useState(initialPlayers);
@@ -43,6 +88,7 @@ const App = () => {
   const [showResumePopup, setShowResumePopup] = useState(false);
   const [gamePaused, setGamePaused] = useState(false);
   const [showQuestion, setShowQuestion] = useState(true);
+  const [gameLevel, setGameLevel] = useState('easy');
 
 
   
@@ -114,19 +160,32 @@ const App = () => {
     setCurrentPlayer(players.find(p => p.hasBall));
   };
 
-  const handleStartGame = () => {
+  const handleStartGame = (level) => {
+    setGameLevel(level); // Set the selected game level
     setGameStarted(true);
     setInTossPhase(true);
   };
 
   const generateMathQuestion = () => {
     if (gameOver) return;  // Don't generate new questions if the game is over
-  
-    const num1 = Math.floor(Math.random() * 10);
-    const num2 = Math.floor(Math.random() * 10);
-    const question = `${num1} + ${num2}`;
-    const answer = num1 + num2;
-    setCurrentQuestion({ question, answer });
+    
+    let questionData;
+    
+    switch (gameLevel) {
+      case 'easy':
+        questionData = generateEasyQuestion();
+        break;
+      case 'medium':
+        questionData = generateMediumQuestion();
+        break;
+      case 'hard':
+        questionData = generateHardQuestion();
+        break;
+      default:
+        questionData = generateEasyQuestion();
+    }
+    
+    setCurrentQuestion(questionData);
     setAnswer('');
     setTimer(10);
     setTimerRunning(true);
@@ -147,7 +206,7 @@ const App = () => {
           setCurrentPlayer(goalkeeper);
           playSound('pass.mp3');
           generateMathQuestion();
-          showAlert('Goalkeeper for Team B has to make a save!  or Team A will have a Goal!!!!', 'bg-red-600', 'text-white', 'top-0');
+          showAlert('Goalkeeper for Team B has to make a save! or Team A will have a Goal', 'bg-red-600', 'text-white', 'top-0');
   
         }
       } else if (currentPlayer.id === 6) {
@@ -160,7 +219,7 @@ const App = () => {
           setCurrentPlayer(goalkeeper);
           playSound('pass.mp3');
           generateMathQuestion();
-          showAlert('Goalkeeper for Team A has to make a save! or Team B will have a Goal!!!!', 'bg-green-600', 'text-white','top-0' );
+          showAlert('Goalkeeper for Team A has to make a save! or Team B will have a Goal', 'bg-green-600', 'text-white','top-0' );
   
         }
       } else if (currentPlayer.id === 0) {
@@ -181,7 +240,7 @@ const App = () => {
     setTimeout(() => alertElement.remove(), 3000); // Remove after 3 seconds
 };
 
-  
+
   const handleTimeout = () => {
     if (gameOver || gamePaused) return;  // Prevent action when the game is paused
   
@@ -276,7 +335,9 @@ const App = () => {
       handleTeammateSelection(playerId);
     }
   };
-
+  const handleLevelSelection = (level) => {
+    setGameLevel(level); // Set the selected game level
+  };
   const handleTeammateSelection = (playerId) => {
     const selectedTeammate = players.find(p => p.id === playerId);
     if (selectedTeammate && selectedTeammate.team === currentPlayer.team && !selectedTeammate.hasBall) {
@@ -344,7 +405,7 @@ const App = () => {
       ) : gameStarted ? (
         inTossPhase ? (
           <>
-            <TossCoin onTossResult={handleTossResult} onStartGame={() => setInTossPhase(false)} />
+            <TossCoin onTossResult={handleTossResult} onLevelSelection={handleLevelSelection}   difficultyLevel={gameLevel} onStartGame={() => setInTossPhase(false)} />
             {tossResult && (
               <div className="text-center text-white text-xl mt-4">
                 {tossResult}

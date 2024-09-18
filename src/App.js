@@ -82,7 +82,7 @@ const App = () => {
   const [gameStarted, setGameStarted] = useState(false);
   const [inTossPhase, setInTossPhase] = useState(false);
   const [tossResult, setTossResult] = useState(null);
-  const [gameDuration, setGameDuration] = useState(100); 
+  const [gameDuration, setGameDuration] = useState(300); 
   const [gameOver, setGameOver] = useState(false);
   const [navigateToLandingPage] = useState(false);
   const [showResumePopup, setShowResumePopup] = useState(false);
@@ -187,7 +187,7 @@ const App = () => {
     
     setCurrentQuestion(questionData);
     setAnswer('');
-    setTimer(10);
+    setTimer(15);
     setTimerRunning(true);
     setQuestionAnswered(false);
   };
@@ -362,7 +362,7 @@ const App = () => {
     setGameStarted(false);
     setInTossPhase(false);
     setTossResult(null);
-    setGameDuration(100);
+    setGameDuration(300);
     setGameOver(false);
   };
   const ResumePopup = ({ onResume }) => (
